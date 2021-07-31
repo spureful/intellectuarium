@@ -51,7 +51,6 @@ props: {
     transform-style: preserve-3d;
     transform-origin: center center;
     transition: transform 1s;
-
   }
 
   .card.disable {
@@ -87,5 +86,12 @@ props: {
    .card__front.flipped, .card__back.flipped {
      transform:  rotateY(180deg) perspective(1000px);
   }
+
+  @media screen and (max-width: 800px) {
+  .card {
+    width: 20%;
+    height: 150px;
+  }
+}
 
 </style>
