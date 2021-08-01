@@ -4,7 +4,6 @@
       memory-card(
         v-for="card in randomCards"
         :key="card.id"
-        :card-resolver="cardResolver"
         :id="card.id"
         :src="card.src"
         :is-card-front="card.isCardFront"
@@ -20,17 +19,19 @@
 <script>
 import { v4 as uuidv4 } from 'uuid';
 import MemoryCard from '@/components/MemoryCards/MemoryCard';
-// const whiteCatImg = require('@/assets/cards/white-cat.png');
-// const blackCatImg = require('@/assets/cards/black-cat.png');
-// const cobraImg = require('@/assets/cards/cobra.png');
-// const dogImg = require('@/assets/cards/dog.png');
-// const elephantImg = require('@/assets/cards/elephant.png');
+
 const ariel = require('@/assets/cards/ariel.jpg');
 const aurora = require('@/assets/cards/aurora.png');
 const elsa = require('@/assets/cards/elsa.png');
 const ladyBag = require('@/assets/cards/lady-bag.png');
 const sofia = require('@/assets/cards/sofia.jpg');
 const supergirl = require('@/assets/cards/supergirl.png');
+
+const clickMP3 = require('@/assets/sounds/click.mp3');
+const sucsessMP3 = require('@/assets/sounds/sucsess.mp3');
+const failMP3 = require('@/assets/sounds/fail.mp3');
+
+const princessImages = [ariel, aurora, elsa, ladyBag, sofia, supergirl];
 
 
 export default {
@@ -40,79 +41,62 @@ name: "MemoryCards",
    this.setCards();
   },
   data() {
+  const cards = princessImages.map(i => ({
+    label: uuidv4(),
+    src: i,
+    isCardFront: false
+  }));
     return {
       inOperation: false,
       randomCards: [],
-      cards: [
-        // {
-        //   label: 'white-cat',
-        //   src: whiteCatImg,
-        //   isCardFront: false
-        // },
-        // {
-        //   label: 'black-cat',
-        //   src: blackCatImg,
-        //   isCardFront: false
-        // },
-        // {
-        //   label: 'cobra',
-        //   src: cobraImg,
-        //   isCardFront: false
-        // },
-        // {
-        //   label: 'dog',
-        //   src: dogImg,
-        //   isCardFront: false
-        // },
-        // {
-        //   label: 'elephant',
-        //   src: elephantImg,
-        //   isCardFront: false
-        // },
-        {
-          label: 'ariel',
-          src: ariel,
-          isCardFront: false
-        },
-        {
-          label: 'aurora',
-          src: aurora,
-          isCardFront: false
-        },
-        {
-          label: 'elsa',
-          src: elsa,
-          isCardFront: false
-        },
-        {
-          label: 'ladyBag',
-          src: ladyBag,
-          isCardFront: false
-        },
-        {
-          label: 'sofia',
-          src: sofia,
-          isCardFront: false
-        },
-        {
-          label: 'supergirl',
-          src: supergirl,
-          isCardFront: false
-        },
-
-      ],
-      cardResolver: false,
-      selectedCards: [],
+      // cards: [
+      //   {
+      //     label: 'ariel',
+      //     src: ariel,
+      //     isCardFront: false
+      //   },
+      //   {
+      //     label: 'aurora',
+      //     src: aurora,
+      //     isCardFront: false
+      //   },
+      //   {
+      //     label: 'elsa',
+      //     src: elsa,
+      //     isCardFront: false
+      //   },
+      //   {
+      //     label: 'ladyBag',
+      //     src: ladyBag,
+      //     isCardFront: false
+      //   },
+      //   {
+      //     label: 'sofia',
+      //     src: sofia,
+      //     isCardFront: false
+      //   },
+      //   {
+      //     label: 'supergirl',
+      //     src: supergirl,
+      //     isCardFront: false
+      //   },
+      //
+      // ],
       counter: 0,
-      firstCard: null
+      firstCard: null,
+      cards
     };
   },
   methods: {
     onClickCard(id) {
+      const clickSound = new Audio(clickMP3);
+      const sucsessSound = new Audio(sucsessMP3);
+      const failSound = new Audio(failMP3);
       if (this.inOperation) {
         return;
       }
       this.inOperation = true;
+      clickSound.play();
       const clickedCard = this.randomCards.find(x => x.id === id);
       clickedCard.isCardFront = true;
 
@@ -126,6 +110,7 @@ name: "MemoryCards",
         this.firstCard.isCardCatched = true;
         clickedCard.isCardCatched = true;
         this._makeIterationEndChanges();
+        sucsessSound.play();
         return;
       }
 
@@ -134,6 +119,7 @@ name: "MemoryCards",
           this.firstCard.isCardFront = false;
           clickedCard.isCardFront = false;
           this.firstCard = null;
+          failSound.play();
           resolve();
         }, 1300)
       });
