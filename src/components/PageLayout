@@ -1,0 +1,45 @@
+<template lang="pug">
+.header
+    router-link(to='/') home
+    router-view
+       slot(name="pageContent")
+
+</template>
+
+<script>
+import MenuItem from '@/components/MenuItem';
+export default {
+  name: "Main", 
+  components: {
+    MenuItem
+  },
+  data() {
+    return {
+      menuItems: [
+        {
+          id: 'Home',
+          path: '/',
+          content: 'Home page'
+        },
+        {
+          id: 'Memory',
+          path: '/memory-cards',
+          content: 'memory cards'
+        },
+        {
+          id: 'Menu',
+          path: '/menu',
+          content: 'menu'
+        },
+      ],
+      ],
+    }
+  },
+}
+</script>
+
+<style scoped>
+  .menu {
+    list-style: none;
+  }
+</style>
