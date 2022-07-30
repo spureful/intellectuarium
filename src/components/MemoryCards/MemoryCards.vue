@@ -1,19 +1,19 @@
 <template lang="pug">
-  .cards
-    .cards__block
-      memory-card(
-        v-for="card in randomCards"
-        :key="card.id"
-        :id="card.id"
-        :src="card.src"
-        :is-card-front="card.isCardFront"
-        :is-card-catched="card.isCardCatched"
-        class="card"
-        @click-card="onClickCard"
-        )
-    button.cards__button-else(
-      @click="setCards"
-    ) TRY AGAIN
+.cards
+  .cards__block
+    memory-card(
+      v-for="card in randomCards"
+      :key="card.id"
+      :id="card.id"
+      :src="card.src"
+      :is-card-front="card.isCardFront"
+      :is-card-catched="card.isCardCatched"
+      class="card"
+      @click-card="onClickCard"
+      )
+  button.cards__button-else(
+    @click="setCards"
+  ) TRY AGAIN
 </template>
 
 <script>
@@ -49,39 +49,6 @@ name: "MemoryCards",
     return {
       inOperation: false,
       randomCards: [],
-      // cards: [
-      //   {
-      //     label: 'ariel',
-      //     src: ariel,
-      //     isCardFront: false
-      //   },
-      //   {
-      //     label: 'aurora',
-      //     src: aurora,
-      //     isCardFront: false
-      //   },
-      //   {
-      //     label: 'elsa',
-      //     src: elsa,
-      //     isCardFront: false
-      //   },
-      //   {
-      //     label: 'ladyBag',
-      //     src: ladyBag,
-      //     isCardFront: false
-      //   },
-      //   {
-      //     label: 'sofia',
-      //     src: sofia,
-      //     isCardFront: false
-      //   },
-      //   {
-      //     label: 'supergirl',
-      //     src: supergirl,
-      //     isCardFront: false
-      //   },
-      //
-      // ],
       counter: 0,
       firstCard: null,
       cards
@@ -163,6 +130,7 @@ name: "MemoryCards",
   .cards__block {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-bottom: 50px;
   }
   .card {

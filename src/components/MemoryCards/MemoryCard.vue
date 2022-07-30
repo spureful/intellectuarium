@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card(
+.card(
     @click="onClickCard"
     :class="{disable: isCardCatched}"
   )

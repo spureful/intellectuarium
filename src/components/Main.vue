@@ -1,16 +1,28 @@
 <template lang="pug">
-  .root
-    memory-cards
+.root
+  menu-component
+  router-view(v-if="isMenuPage")
+
 </template>
 
 <script>
-import MemoryCards from '@/components/MemoryCards/MemoryCards';
+import MenuComponent from '@/components/Menu/Menu.vue';
+
 export default {
-name: "Main",
-  components: { MemoryCards }
+  name: "Main", 
+  components: {
+    MenuComponent
+  },
+  computed: {
+    isMenuPage() {
+      console.log(window.location.pathname);
+      return window.location.pathname !== '/';
+    }
+  }
+
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 
 </style>
